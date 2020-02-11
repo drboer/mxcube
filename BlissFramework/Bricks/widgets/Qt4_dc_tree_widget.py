@@ -356,6 +356,13 @@ class DataCollectTree(QWidget):
 
         if isinstance(item, Qt4_queue_item.QueueItem):
             item.update_check_state(item.checkState(0))
+            # update name if edited in rename
+            # logging.getLogger('HWR').debug("******* In item_changed: item text %s" % item.text(0))
+            if item.get_model():
+                item.get_model().set_name(item.text(0))
+                # propagate changes to task toolbox widget (update prefix)
+                # logging.getLogger('HWR').debug("******* In item_changed: selection_changed_cb %s" % self.selection_changed_cb)
+                self.selection_changed_cb([item])
 
     def use_plate_navigator(self, state):
         """Toggles visibility of the plate navigator"""
@@ -411,7 +418,10 @@ class DataCollectTree(QWidget):
 
     def rename_treewidget_item(self):
         """Rename treewidget item"""
+        # logging.getLogger("HWR").debug("********** rename item")
+
         items = self.get_selected_items()
+        # logging.getLogger('HWR').debug('************ Type(%s)' % type(items[0]))
         if len(items) == 1:
             items[0].setFlags(Qt.ItemIsSelectable |
                               Qt.ItemIsEnabled |
@@ -1289,6 +1299,7 @@ class DataCollectTree(QWidget):
 
     def populate_free_pin(self, sample=None):
         """Populates manualy mounted sample"""
+        # logging.getLogger('GUI').debug('************ In populate_free_pin')
         self.queue_model_hwobj.clear_model('free-pin')
         self.queue_model_hwobj.select_model('free-pin')
         if sample is None:
