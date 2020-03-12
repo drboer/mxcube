@@ -242,20 +242,21 @@ class TreeBrick(BaseWidget):
             logging.getLogger("GUI").debug(
                 "TreeBrick: plate manipulator hwobj not defined."
             )
-
+        print("**********", HWR.beamline)
+        print("**********", HWR.beamline.sample_view)
         self.connect(
-            HWR.beamline.microscope, "shapeCreated", self.dc_tree_widget.shape_created
+            HWR.beamline.sample_view, "shapeCreated", self.dc_tree_widget.shape_created
         )
         self.connect(
-            HWR.beamline.microscope,
+            HWR.beamline.sample_view,
             "shapeChanged",
             self.dc_tree_widget.shape_changed
         )
         self.connect(
-            HWR.beamline.microscope, "shapeDeleted", self.dc_tree_widget.shape_deleted
+            HWR.beamline.sample_view, "shapeDeleted", self.dc_tree_widget.shape_deleted
         )
         self.connect(
-            HWR.beamline.microscope,
+            HWR.beamline.sample_view,
             "diffractometerReady",
             self.diffractometer_ready_changed
         )

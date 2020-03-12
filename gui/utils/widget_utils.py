@@ -68,6 +68,7 @@ class DataModelInputBinder(object):
                         )
                     )
             try:
+#                print("*************", self.__model, field_name, origin_value)
                 setattr(self.__model, field_name, type_fn(origin_value))
             except ValueError:
                 if origin_value != "":
@@ -179,6 +180,7 @@ class DataModelInputBinder(object):
         self.bindings[field_name] = [widget, validator, type_fn, False]
 
         if isinstance(widget, QtImport.QLineEdit):
+#            print("*********", field_name, widget)
             widget.textChanged.connect(
                 lambda new_value: self.__ledit_update_value(
                     field_name, widget, new_value, type_fn, validator

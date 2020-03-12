@@ -86,7 +86,7 @@ class TaskToolBoxBrick(BaseWidget):
         if HWR.beamline.session.session_id:
             self.setEnabled(True)
 
-        HWR.beamline.microscope.connect("pointSelected", self.point_selected)
+        HWR.beamline.sample_view.connect("pointSelected", self.point_selected)
 
         self.request_tree_brick.emit()
         self.task_tool_box_widget.adjust_width(self.width())
