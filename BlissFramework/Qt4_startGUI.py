@@ -323,7 +323,9 @@ def run(gui_config_file=None):
     #app.setWindowIcon(QIcon("images/icon.png"))
 
     # lockfile EXISTS HERE
+    logging.getLogger().info("**** Starting main application")
     main_application.exec_()
+    logging.getLogger().info("**** Ending main application. Finalizing...")
     # lockfile DOES NOT EXIST HERE
 
     #gevent_timer = QTimer()
@@ -331,7 +333,7 @@ def run(gui_config_file=None):
     #gevent_timer.start(0)
 
     supervisor.finalize()
-
+    logging.getLogger().info("**** Gui supervisor has ended.")
     # This lock file is already deleted at this point
     #if lockfile is not None:
     #    filename = lockfile.name
@@ -347,7 +349,7 @@ def run(gui_config_file=None):
         try:
             log_lockfile.close()
             os.unlink(filename)
-            logging.getLogger().info("Removing log lock file %s" % filename)
+            logging.getLogger().info("**** Removing log lock file %s" % filename)
         except Exception as e:
             logging.getLogger().exception("Problem removing the log lock file:\n%s" % str(e))
 
