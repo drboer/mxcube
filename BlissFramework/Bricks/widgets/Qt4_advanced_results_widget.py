@@ -61,6 +61,10 @@ class AdvancedResultsWidget(QWidget):
                 bl_setup.parallel_processing_hwobj.connect(
                          'processingResultsUpdate',
                          self.set_processing_results)
+                bl_setup.parallel_processing_hwobj.connect(
+                         'processingStarted',
+                         self.processing_started)
+
                 self._initialized = True
         self.heat_map_widget.set_beamline_setup(bl_setup)
 
@@ -74,11 +78,17 @@ class AdvancedResultsWidget(QWidget):
 
         self.heat_map_widget.clean_result()
         self.heat_map_widget.set_associated_data_collection(data_collection)
-     
-        if executed: 
+
+        if executed:
             processing_results = data_collection.get_parallel_processing_result()
             if processing_results is not None:
                 self.heat_map_widget.set_results(processing_results, True)
 
-    def set_processing_results(self, processing_results, param, last_results):
-        self.heat_map_widget.set_results(processing_results, last_results)
+    def set_processing_results(self, last_results):
+        #self.heat_map_widget.set_results(last_results)
+        self.heat_map_widget.update_results(last_results)
+
+    def processing_started(self, data_collection, results_raw, results_aligned):
+        # self.hit_map_widget.set_associated_data_collection(data_collection)
+        #self.heat_map_widget.set_results(results_raw, results_aligned)
+        self.heat_map_widget.set_results(results_aligned, False)
