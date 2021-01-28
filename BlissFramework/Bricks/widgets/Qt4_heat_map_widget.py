@@ -427,6 +427,19 @@ class HeatMapWidget(QWidget):
             self.__label_im, nb_labels = ndimage.label(self.__results['score'] > 0)
         #self.set_best_pos()
 
+    def update_results(self, last_result):
+        logging.getLogger('HWR').debug('HIT MAP WIDGET: update_results')
+        logging.getLogger('HWR').debug('results: %s' % self.__results)
+        logging.getLogger('HWR').debug('score key: %s' % self.__score_key)
+        #self._heat_map_plot.plot_result(v)
+        if self.__results[self.__score_key].ndim == 1:
+#            logging.getLogger('HWR').debug('results are 1D')
+            self._heat_map_plot.update_curves(self.__results)
+            self.adjust_axes()
+        else:
+            logging.getLogger('HWR').debug('HIT MAP WIDGET: UPDATE plotting results')
+            self._heat_map_plot.plot_result(numpy.transpose(self.__results[self.__score_key]))
+
     def clean_result(self):
         """
         Method to clean heat map, summary log and table with best positions
