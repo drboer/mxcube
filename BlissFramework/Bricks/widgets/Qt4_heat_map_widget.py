@@ -393,9 +393,9 @@ class HeatMapWidget(QWidget):
                              self.__results[self.__score_key][col][row])
                 else: 
                     msg = "Image: %d" % self.selected_image_serial
-
-                label_im = deepcopy(self.__label_im)
-                label_im[label_im != label_im[col, row]] = 0
+                #label_im = deepcopy(self.__label_im)
+                #logging.getLogger('HWR').debug('label_im is %s' % label_im)
+                #label_im[label_im != label_im[col, row]] = 0
             else:
                 msg = "Image: %d" % int(pos_x) 
             self._image_info_label.setText(msg)
