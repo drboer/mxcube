@@ -69,8 +69,8 @@ class Qt4_ParallelProcessingPreviewBrick(BlissWidget):
         self.mesh_results_widget.heat_map_widget._summary_gbox.setHidden(True)
         self.line_results_widget.heat_map_widget._summary_gbox.setHidden(True)
 
-        self.mesh_results_widget.heat_map_widget.setFixedWidth(1450)
-        self.line_results_widget.heat_map_widget.setFixedWidth(1450)
+        #self.mesh_results_widget.heat_map_widget.setFixedWidth(250)
+        #self.line_results_widget.heat_map_widget.setFixedWidth(250)
 
     def populate_widget(self, item):
         if isinstance(item, Qt4_queue_item.XrayCenteringQueueItem):
