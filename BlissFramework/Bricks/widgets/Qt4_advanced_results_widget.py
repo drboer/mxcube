@@ -59,7 +59,7 @@ class AdvancedResultsWidget(QWidget):
             if bl_setup.parallel_processing_hwobj and \
             not self._initialized:
                 bl_setup.parallel_processing_hwobj.connect(
-                         'paralleProcessingResults', 
+                         'processingResultsUpdate',
                          self.set_processing_results)
                 self._initialized = True
         self.heat_map_widget.set_beamline_setup(bl_setup)
