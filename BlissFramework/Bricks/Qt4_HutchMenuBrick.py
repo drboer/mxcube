@@ -93,9 +93,6 @@ class Qt4_HutchMenuBrick(BlissWidget):
         self.auto_center_button.setText("Auto")
         self.realign_button = MonoStateButton(self, "Realign beam", "QuickRealign")
 
-
-        self.draw_grid_button.hide()
-
         # Layout -------------------------------------------------------------- 
         _main_vlayout = QVBoxLayout(self)
         _main_vlayout.addWidget(self.centre_button)
