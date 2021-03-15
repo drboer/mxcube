@@ -666,6 +666,7 @@ class Qt4_MotorSpinBoxBrick(BlissWidget):
                          self.state_changed,
                          instanceFilter=True)
 
+        self.position_changed(self.motor_hwobj.getPosition())
         self.pos_history = []
         self.update_gui()
         #self['label'] = self['label']
