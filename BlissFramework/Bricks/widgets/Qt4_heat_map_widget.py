@@ -19,6 +19,7 @@
 
 import os
 import numpy
+import logging
 from scipy import ndimage
 
 from QtImport import *
