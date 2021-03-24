@@ -512,8 +512,8 @@ class Qt4_CatsMaintBrick(BlissWidget):
 
     def recover_failure(self):
         try:
-            if self.device is not None:
-                self.device._doRecoverFailure()
+            if self.cats_device is not None:
+                self.cats_device._doRecoverFailure()
         except:
             QMessageBox.warning( self, "Error",str(sys.exc_info()[1]))
 
@@ -526,8 +526,8 @@ class Qt4_CatsMaintBrick(BlissWidget):
 
     def reset_put_get(self):
         try:
-            if self.device is not None:
-                self.device._doReset()
+            if self.cats_device is not None:
+                self.cats_device._doReset()
         except:
             import traceback
             logging.getLogger("HWR").info("error running reset put get: %s" % traceback.format_exc())
