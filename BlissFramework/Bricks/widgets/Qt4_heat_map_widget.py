@@ -549,8 +549,9 @@ class HeatMapWidget(QWidget):
         """
         col, row = self.__associated_grid.get_col_row_from_line_image(line, image)
         ## TODO check if next line needs to be removed
-        row = self.__results[self.__score_key].shape[1] - row - 1
+        #row = self.__results[self.__score_key].shape[1] - row - 1
         return col, row
+        #return line, image
 
     def create_centring_point(self, coord_x=None, coord_y=None):
         """
