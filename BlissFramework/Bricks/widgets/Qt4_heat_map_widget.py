@@ -19,6 +19,7 @@
 
 import os
 import numpy
+import logging
 from scipy import ndimage
 
 from QtImport import *
@@ -393,9 +394,9 @@ class HeatMapWidget(QWidget):
                              self.__results[self.__score_key][col][row])
                 else: 
                     msg = "Image: %d" % self.selected_image_serial
-
-                label_im = deepcopy(self.__label_im)
-                label_im[label_im != label_im[col, row]] = 0
+                #label_im = deepcopy(self.__label_im)
+                #logging.getLogger('HWR').debug('label_im is %s' % label_im)
+                #label_im[label_im != label_im[col, row]] = 0
             else:
                 msg = "Image: %d" % int(pos_x) 
             self._image_info_label.setText(msg)
@@ -426,6 +427,19 @@ class HeatMapWidget(QWidget):
         if last_results:
             self.__label_im, nb_labels = ndimage.label(self.__results['score'] > 0)
         #self.set_best_pos()
+
+    def update_results(self, last_result):
+        logging.getLogger('HWR').debug('HIT MAP WIDGET: update_results')
+        logging.getLogger('HWR').debug('results: %s' % self.__results)
+        logging.getLogger('HWR').debug('score key: %s' % self.__score_key)
+        #self._heat_map_plot.plot_result(v)
+        if self.__results[self.__score_key].ndim == 1:
+#            logging.getLogger('HWR').debug('results are 1D')
+            self._heat_map_plot.update_curves(self.__results)
+            self.adjust_axes()
+        else:
+            logging.getLogger('HWR').debug('HIT MAP WIDGET: UPDATE plotting results')
+            self._heat_map_plot.plot_result(numpy.transpose(self.__results[self.__score_key]))
 
     def clean_result(self):
         """
@@ -535,8 +549,9 @@ class HeatMapWidget(QWidget):
         """
         col, row = self.__associated_grid.get_col_row_from_line_image(line, image)
         ## TODO check if next line needs to be removed
-        row = self.__results[self.__score_key].shape[1] - row - 1
+        #row = self.__results[self.__score_key].shape[1] - row - 1
         return col, row
+        #return line, image
 
     def create_centring_point(self, coord_x=None, coord_y=None):
         """
