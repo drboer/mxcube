@@ -182,6 +182,7 @@ class HeatMapWidget(QWidget):
               self.toogle_continues_image_display)
         self.continues_display_action.setCheckable(True)
         self.continues_display_action.setChecked(True)
+        self.continues_display_action.setEnabled(False)
 
         self._heat_map_popup_menu.addSeparator()
         options_menu = self._heat_map_popup_menu.addMenu("Options")
@@ -492,7 +493,8 @@ class HeatMapWidget(QWidget):
         image, line, image_num, image_path = self.get_image_parameters_from_coord()
         try:
             self._beamline_setup_hwobj.image_tracking_hwobj.load_image(image_path)
-        except:
+        except Exception as e:
+            logging.getLogger('HWR').error('display image error: %s' % str(e))
             pass
 
     def display_image_tooltip(self):
