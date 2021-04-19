@@ -19,6 +19,7 @@
 
 import os
 import numpy
+import logging
 from scipy import ndimage
 
 from QtImport import *
@@ -181,6 +182,7 @@ class HeatMapWidget(QWidget):
               self.toogle_continues_image_display)
         self.continues_display_action.setCheckable(True)
         self.continues_display_action.setChecked(True)
+        self.continues_display_action.setEnabled(False)
 
         self._heat_map_popup_menu.addSeparator()
         options_menu = self._heat_map_popup_menu.addMenu("Options")
@@ -393,9 +395,9 @@ class HeatMapWidget(QWidget):
                              self.__results[self.__score_key][col][row])
                 else: 
                     msg = "Image: %d" % self.selected_image_serial
-
-                label_im = deepcopy(self.__label_im)
-                label_im[label_im != label_im[col, row]] = 0
+                #label_im = deepcopy(self.__label_im)
+                #logging.getLogger('HWR').debug('label_im is %s' % label_im)
+                #label_im[label_im != label_im[col, row]] = 0
             else:
                 msg = "Image: %d" % int(pos_x) 
             self._image_info_label.setText(msg)
@@ -426,6 +428,19 @@ class HeatMapWidget(QWidget):
         if last_results:
             self.__label_im, nb_labels = ndimage.label(self.__results['score'] > 0)
         #self.set_best_pos()
+
+    def update_results(self, last_result):
+        logging.getLogger('HWR').debug('HIT MAP WIDGET: update_results')
+        logging.getLogger('HWR').debug('results: %s' % self.__results)
+        logging.getLogger('HWR').debug('score key: %s' % self.__score_key)
+        #self._heat_map_plot.plot_result(v)
+        if self.__results[self.__score_key].ndim == 1:
+#            logging.getLogger('HWR').debug('results are 1D')
+            self._heat_map_plot.update_curves(self.__results)
+            self.adjust_axes()
+        else:
+            logging.getLogger('HWR').debug('HIT MAP WIDGET: UPDATE plotting results')
+            self._heat_map_plot.plot_result(numpy.transpose(self.__results[self.__score_key]))
 
     def clean_result(self):
         """
@@ -478,7 +493,8 @@ class HeatMapWidget(QWidget):
         image, line, image_num, image_path = self.get_image_parameters_from_coord()
         try:
             self._beamline_setup_hwobj.image_tracking_hwobj.load_image(image_path)
-        except:
+        except Exception as e:
+            logging.getLogger('HWR').error('display image error: %s' % str(e))
             pass
 
     def display_image_tooltip(self):
@@ -535,8 +551,9 @@ class HeatMapWidget(QWidget):
         """
         col, row = self.__associated_grid.get_col_row_from_line_image(line, image)
         ## TODO check if next line needs to be removed
-        row = self.__results[self.__score_key].shape[1] - row - 1
+        #row = self.__results[self.__score_key].shape[1] - row - 1
         return col, row
+        #return line, image
 
     def create_centring_point(self, coord_x=None, coord_y=None):
         """
