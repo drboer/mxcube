@@ -169,6 +169,7 @@ class CustomMenuBar(QMenuBar):
             #This should be based on instance connection
             # restore colour if master/client/etc
             self.original_style = self.styleSheet()
+
         if self.expert_mode_action.isChecked():
             res = QInputDialog.getText(self,
                 "Switch to expert mode", "Please enter the password:",
@@ -229,6 +230,8 @@ class CustomMenuBar(QMenuBar):
                         logging.getLogger().exception(\
                             "Could not set %s to user mode" % \
                             widget.objectName())
+            # The color of the menu bar is not reverted using the original_style
+            self.set_color("lightgray")
             if self.original_style:
                 self.setStyleSheet(self.original_style)
 
