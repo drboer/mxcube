@@ -284,6 +284,8 @@ class Qt4_CatsMaintBrick(BlissWidget):
                 self.widget.btMemClear.hide()
                 self.widget.btRegulationOff.hide()
                 self.widget.btResetMotion.hide()
+                self.widget.btResetPutGet.hide()
+                self.widget.btRecoverFailure.hide()
             else:
                 self.widget.boxTools.show()
                 self.widget.btMore.hide()
@@ -295,6 +297,8 @@ class Qt4_CatsMaintBrick(BlissWidget):
                 self.widget.btMemClear.show()
                 self.widget.btRegulationOff.show()
                 self.widget.btResetMotion.show()
+                self.widget.btResetPutGet.show()
+                self.widget.btRecoverFailure.show()
 
             # Open for users
             #self.widget.btPowerOn.setEnabled(ready and not powered)
@@ -325,6 +329,7 @@ class Qt4_CatsMaintBrick(BlissWidget):
             self.widget.btRegulationOff.setEnabled(ready and regulOn)
 
             self.widget.btResetPutGet.setEnabled(ready)
+            self.widget.btRecoverFailure.setEnabled(ready)
 
             self.update_lid1_state(self.lid1_state)
             self.update_lid2_state(self.lid2_state)
