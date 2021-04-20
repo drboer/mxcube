@@ -297,6 +297,10 @@ class Qt4_TreeBrick(BlissWidget):
             self.diffractometer_hwobj = bl_setup.diffractometer_hwobj
             self.session_hwobj = bl_setup.session_hwobj
             self.lims_hwobj = bl_setup.lims_client_hwobj
+            if 'test' in self.lims_hwobj.ws_root:
+                QMessageBox.information(self, "ISPyB Client Confirmation", 
+                                        "You seem to be using a test version of the ISpyB client.", 
+                                        QMessageBox.Ok) 
 
             if bl_setup.sample_changer_hwobj is not None:
                self.sample_changer_hwobj = bl_setup.sample_changer_hwobj
